@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mysterious Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Access Granted screen -->
+    <div id="access-granted" style="display: none;">
+        <h1 id="access-text">ACCESS GRANTED</h1>
+    </div>
+
+    <!-- Intro screen with "Are you real?" -->
+    <div id="intro">
+        <h1 id="question">Are you real?</h1>
+    </div>
+
+    <!-- Main content with command-line questions -->
+    <div id="main-content" style="display: none;">
+        <div id="command-line">
+            <div id="prompt"></div>
+            <input type="text" id="user-input" autocomplete="off" autofocus>
+        </div>
+    </div>
+
+    <!-- Dimension screen with Data Log styled like Deus Ex interface -->
+    <div id="dimension" style="display: none;">
+        <div id="ui-overlay">
+            <img id="background-img" src="WORLDIF.jpg" alt="Future World Background">
+            <div id="bulletin-board">
+                <div id="header">
+                    <h2>Data Log</h2>
+                    <button id="close-log">X</button>
+                </div>
+                <div id="data-log">
+                    <!-- This section will display stored data -->
+                    
+                    <div>
+                    <h1> PILOT LOG 24/10/19 </h1>
+                    LOG INFORMATION DATE "ONTARIO" 
+                    MASTER INFORMATION IS NOW LOADING 
+                    CONFIGURING SUBSYSTEMS . . . 
+
+                    WEAPONIZING INFORMATION FROM MAKMAKI "THE SORCEROR"
+
+                    PLEASE WAIT WHILE DATA IS LOADING . . . THIS WILL BE UPDATED SOON.
+                    </div>
+                </div>
+                <div id="info-section">
+                    <h2>Information</h2>
+                    <p id="information">Welcome to the next dimension. A world is now in progress.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minimized icon for Data Log -->
+    <div id="minimized-log" style="display: none;">
+        <button id="open-log-btn">📁</button>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
