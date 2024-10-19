@@ -34,7 +34,7 @@
                     <h2>Data Log</h2>
                     <button id="close-log">X</button>
                 </div>
-                <div id="data-log">
+                 <div id="data-log">
                     <!-- This section will display stored data -->
                     
                     <div>
@@ -50,16 +50,26 @@
                 </div>
                 <div id="info-section">
                     <h2>Information</h2>
-                    <p id="information">Welcome to the next dimension. A world is now in progress.</p>
+                    <p id="information">Welcome to the next dimension. Reality is a construct...</p>
                 </div>
             </div>
         </div>
+        <!-- Waveform Animation Canvas -->
+        <canvas id="waveform"></canvas>
     </div>
 
     <!-- Minimized icon for Data Log -->
     <div id="minimized-log" style="display: none;">
         <button id="open-log-btn">📁</button>
     </div>
+
+    <!-- Mute/Unmute Button -->
+    <div id="mute-toggle" style="display: none;">
+        <button id="mute-btn">🔊</button>
+    </div>
+
+    <!-- Audio File -->
+    <audio id="audio" src="areyoureal.mp3" preload="auto"></audio>
 
     <script src="scripts.js"></script>
 </body>

@@ -12,8 +12,13 @@ window.onload = function () {
     const closeLogBtn = document.getElementById('close-log');
     const minimizedLog = document.getElementById('minimized-log');
     const openLogBtn = document.getElementById('open-log-btn');
-
+    const muteToggle = document.getElementById('mute-toggle');
+    const muteBtn = document.getElementById('mute-btn');
+    const audio = document.getElementById('audio');
+    const waveform = document.getElementById('waveform');
+    
     let questionsAnswered = localStorage.getItem('questionsAnswered');
+    let isMuted = false;
 
     // If answers are already stored, show the "Access Granted" screen
     if (questionsAnswered === 'true') {
@@ -76,6 +81,9 @@ window.onload = function () {
         setTimeout(() => {
             accessGranted.style.display = 'none';
             dimension.style.display = 'flex'; // Transition to the next phase
+            muteToggle.style.display = 'block';  // Show mute button
+            audio.play(); // Play the audio when the WORLDIF photo loads
+            visualizeAudio(); // Start the waveform animation
         }, 3000); // Show access granted for 3 seconds
     }
 
@@ -91,4 +99,66 @@ window.onload = function () {
         bulletinBoard.style.display = 'flex';
         bulletinBoard.style.opacity = 1;
     });
+
+    // Mute/Unmute audio
+    muteBtn.addEventListener('click', function () {
+        if (isMuted) {
+            audio.muted = false;
+            muteBtn.textContent = '🔊';
+        } else {
+            audio.muted = true;
+            muteBtn.textContent = '🔇';
+        }
+        isMuted = !isMuted;
+    });
+
+    // Audio visualization
+    function visualizeAudio() {
+        const audioContext = new AudioContext();
+        const analyser = audioContext.createAnalyser();
+        const source = audioContext.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(audioContext.destination);
+        analyser.fftSize = 256;
+
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        const canvas = document.getElementById('waveform');
+        const canvasCtx = canvas.getContext('2d');
+        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+        function drawWaveform() {
+            requestAnimationFrame(drawWaveform);
+            analyser.getByteTimeDomainData(dataArray);
+
+            canvasCtx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+            canvasCtx.lineWidth = 2;
+            canvasCtx.strokeStyle = '#00ffff';
+
+            canvasCtx.beginPath();
+            const sliceWidth = canvas.width / bufferLength;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = (v * canvas.height) / 2;
+
+                if (i === 0) {
+                    canvasCtx.moveTo(x, y);
+                } else {
+                    canvasCtx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            canvasCtx.lineTo(canvas.width, canvas.height / 2);
+            canvasCtx.stroke();
+        }
+
+        drawWaveform();
+    }
 };
